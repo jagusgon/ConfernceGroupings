@@ -12,6 +12,8 @@ for(i in names(Data)){
         Data[,i] <- gsub(",_", ", ", Data[,i])
 }
 
+#can get from sourcing AddUnderscores.R and calling AddUnderscores()
+
 table(Data$I.Represent.A)
 table(Data$Other) #Not useful
 table(Data$I.want.to.Meet)
