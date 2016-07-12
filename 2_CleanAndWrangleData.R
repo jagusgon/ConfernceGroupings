@@ -29,8 +29,21 @@ library(plyr)
 
 DF <- ddply(Data, .(id), function(x)
         table(factor(unlist(strsplit(paste(x$Event.of.Interest, 
-                                           x$I.want.to.Meet), ", ")),
-                            levels = all_EventsOfInterest)))
+                                           x$I.want.to.Meet, sep = ', '), 
+                                     ", ")), levels = all_EventsOfInterest)))
+head(DF)
+head(Data)
+test <- Data[1:6,]
+paste(test$Event.of.Interest, test$I.want.to.Meet, sep = ', ')
+strsplit(paste(test$Event.of.Interest, test$I.want.to.Meet, sep = ', '),', ')
+unlist(strsplit(paste(test$Event.of.Interest, test$I.want.to.Meet, sep = ', '),', '))
+factor(unlist(strsplit(paste(test$Event.of.Interest, test$I.want.to.Meet, sep = ', '),', ')),
+       levels = all_EventsOfInterest)
+table(factor(unlist(strsplit(paste(test$Event.of.Interest, test$I.want.to.Meet),', ')),
+             levels = all_EventsOfInterest)
+)
+
+
 
 #Add back the participant's industry
 DF$ClientIndustry <- Data$I.Represent.A
