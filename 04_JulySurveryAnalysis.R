@@ -23,3 +23,7 @@ DF3 <- SpreadResponses(DF2)
 # Remove columns with no predictive power
 drops <- c('Other', 'na', 'N/A', '---_please_select_---')
 DF4 <- DF3[ , !(names(DF3) %in% drops)]
+write.csv(DF4, paste(datadir, 'SmartSummitBinary.csv'))
+
+names(DF2)
+names(DF4)
