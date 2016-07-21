@@ -73,5 +73,5 @@ table(DFLearnSprd$cluster, DFLearnSprd$PCAcluster)
 c <- 9
 as.matrix(colSums(DFLearnSprd[DFLearnSprd$cluster == c,]))
 
-plot(DF_PC$PC1, DF_PC$PC2, col = DFLearnSprd$cluster, pch = 20)
-plot(Prin_Comp$rotation[,1], Prin_Comp$rotation[,2], col=DFLearnSprd$cluster, pch=20)
+plot(DF_PC$PC1, DF_PC$PC2, col = DFLearnSprd$PCAcluster, pch = 20, cex=3)
+#how can I assess the goodness of fit for clustering?
