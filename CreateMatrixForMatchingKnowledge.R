@@ -10,40 +10,43 @@ distanceToTargets <- function(user, targets = mtargets){
         for(i in 1:nrow(targets)){
                 distances[i] <- cosine(user, targets[i,])
         }
+        #This makes the outcome binary:
         distances[is.na(distances)] <- 0
-        #distances[distances > 0] <- 1
+        distances[distances > 0] <- 1
         return(distances)
 }
 
-usersTidy[281,]
-tarTidy[248,]
-mSum[281,]
-musers[281,]
-x <- distanceToTargets(musers[281,])
-table(is.na(x))
-table(x)
-which(x == max(x))
-usersTidy[281,]
-tarTidy[296,]
-which(x < 0.15 & x > 0)
-
-
+# usersTidy[281,]
+# tarTidy[248,]
+# mSum[281,]
+# musers[281,]
+# x <- distanceToTargets(musers[281,])
+# table(is.na(x))
+# table(x)
+# which(x == max(x))
+# usersTidy[281,]
+# tarTidy[296,]
+# which(x < 0.15 & x > 0)
+# 
+# 
 
 
 for(i in 1:nrow(musers)){
         m[i,] <- distanceToTargets(musers[i,])
 }
-head(m)
-summary(m)
-mSum <- m + t(m)
-max(mSum)
-range(mSum)
-tail(mSum)
-hist(mSum[mSum > 0])
 
-x <- which(mSum[1,] == max(mSum[1,]), arr.ind = T)
-x <- which(mSum[38,] > 1, arr.ind = T)
-head(x)
+mSum <- m + t(m)
+
+
+# max(mSum)
+# range(mSum)
+# tail(mSum)
+# hist(mSum)
+# length(mSum[mSum > 0])
+# 
+# x <- which(mSum[1,] == max(mSum[1,]), arr.ind = T)
+# x <- which(mSum[38,] > 1, arr.ind = T)
+# head(x)
 
 L <- list()
 for(i in 1:nrow(mSum)){
@@ -52,10 +55,26 @@ for(i in 1:nrow(mSum)){
         L[[i]] <- y
 }
 
-lapply(L, write, 'MatchingKnowdledge02.txt', append=T, sep=', ', ncolumns=1000)
+
+total <- 0
+for(i in 1:length(L)){
+        total <- total+length(L[[i]])
+}
+total/length(L)
+
+lapply(L, write, 'MatchingKnowdledge03.txt', append=T, sep=', ', ncolumns=1000)
+
+
+one <- 256
+two <- 277
+vec1 <- as.vector(usersTidy[two,], mode = 'numeric')
+vec2 <- as.vector(tarTidy[one,], mode = 'numeric')
+vec1
+vec2
 
 usersTidy[281,]
-tarTidy[248,]
+tarTidy[254,]
+cosine(vec1, vec2)
 mSum[281,]
 musers[281,]
 x <- distanceToTargets(musers[281,])
