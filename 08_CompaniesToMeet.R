@@ -8,7 +8,7 @@ datadir <- paste(path, '/data/', sep = '')
 #Load and clean data
 Data3 <- read.csv(paste(datadir, "Smart_Summit_All_Data.csv", sep = ''),
                   header = T, na.strings = '')
-
+Data3 <- Data3[rowSums(is.na(Data3)) != ncol(Data3),]
 DF3 <- Data3[,19:22]
 names(DF3)[c(2,4)] <- c("OtherCompany", "OtherValueInMeeting")
 
@@ -58,29 +58,14 @@ for(i in 1:21){
 names(usersSpread) <- userNames
 tarSpread <- tarSpread[, names(tarSpread) %in% userNames]
 
-# Look at cosine distances
-#install.packages('lsa')
-#install.packages('spatialEco')
-library(lsa)
-library(spatialEco)
-vec1 = c( 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
-vec2 = c( 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0 )
-cosine(vec1,vec2) 
-
-result <- numeric()
-for(i in 1:nrow(targetsTrim)){
-        vec2 <- as.vector(targetsTrim[i,], mode = 'numeric')
-        result[i] <- cosine(vec1, vec2)   
+#Get the columns the dataframes to be in the same order
+dim(tarSpread)
+dim(usersSpread)
+names(tarSpread)
+names(usersSpread)
+ 
+index <- integer()
+for(name in names(tarSpread)){
+        index <- c(index, which(names(usersSpread) == name))
 }
-
-rowSums(usersSpread)
-usersTrim <- usersSpread[rowSums(usersSpread) > 0,]
-vec1 <- as.vector(usersTrim[1,], mode = 'numeric')
-targetsTrim <- tarSpread[rowSums(tarSpread) > 0,]
-vec2 <- as.vector(targetsTrim[1,], mode = 'numeric')
-cosine(vec1, vec2)
-
-table(result)
-max(rowSums(usersTrim))
-max(rowSums(targetsTrim))
-vec1 <- as.vector(usersTrim[11,], mode = 'numeric')
+usersSpread <- usersSpread[, index]
