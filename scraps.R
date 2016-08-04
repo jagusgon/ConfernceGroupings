@@ -106,3 +106,15 @@ x
 test2 <- Data3[,c(20,24)]
 test2 <- SpreadResponses(test2)
 names(test2)
+
+
+test <- CompaniesToMeet[,38]
+x <- test[1]
+print(DeligatesList[x])
+test2 <- character()
+for(i in 1:length(test)){
+        if(test[i] > 0){
+                temp <- test[i]
+                test2[i] <- DeligatesList[temp]
+        }
+}
