@@ -1,4 +1,5 @@
 library(lsa)
+source('GetMatches.R')
 
 # make empty matrix for for values to be added
 m <- matrix(0, nrow = nrow(usersSpread), ncol = nrow(tarSpread))
@@ -33,58 +34,5 @@ for(i in 1:nrow(mSum)){
         L[[i]] <- y
 }
 
-# Put list into a dataframe
-CompaniesToMeet <- data.frame(matrix(0, nrow = length(L), ncol = length(L)))
-for(i in 1:length(L)){
-        for(j in 1:length(L[[i]])){
-                CompaniesToMeet[j,i] <- L[[i]][j]
-        }
-}
-
-# Trim off the blank rows
-CompaniesToMeet <- CompaniesToMeet[rowSums(CompaniesToMeet) > 0,]
-
-# Info on the deligates
-DeligatesToMeet <- data.frame(matrix(as.character(''), nrow = nrow(CompaniesToMeet),
-                                     ncol = ncol(CompaniesToMeet)), stringsAsFactors = F)
-
-names(DeligatesToMeet) <- 1:ncol(CompaniesToMeet)
-Deligates <- Data[,c(4:6, 8)]
-# Put the deligates and affilations into a character vector
-DeligatesList <- character()
-for(i in 1:nrow(Deligates)){
-        DeligatesList[i] <- paste(Deligates[i,1],
-                                    Deligates[i,2],
-                                    Deligates[i,3],
-                                    ',',
-                                    Deligates[i,4])
-        DeligatesList[i] <- gsub(' , ', ', ', DeligatesList[i])
-}
-
-for(i in 1:length(names(DeligatesToMeet))){
-        names(DeligatesToMeet)[i] <- paste(Deligates[i,1],
-                                           Deligates[i,2],
-                                           Deligates[i,3])
-}
-
-# Grab the names of deligate targets and fill into dataframe
-for(i in 1:ncol(CompaniesToMeet)){
-        for(j in 1:length(CompaniesToMeet[,i])){
-                if(CompaniesToMeet[j,i] > 0){
-                        Person <- CompaniesToMeet[j,i]
-                        DeligatesToMeet[j,i] <- DeligatesList[Person]
-                }
-        }
-}
-
-write.csv(DeligatesToMeet, 'CompanyMatches.csv', row.names = F)
-
-
-#lapply(L, write, 'test4.txt', append=T, sep=', ', ncolumns=1000)
-
-maxLength <- 0
-for(i in 1:length(L)){
-        if(length(L[[i]]) > maxLength){
-                maxLength <- length(L[[i]])
-        }
-}
+DelegatesToMeet <- GetMatches(L, Data)
+write.csv(DelegatesToMeet, 'CompanyMatches.csv', row.names = F)

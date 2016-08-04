@@ -6,11 +6,11 @@ path <- getwd()
 datadir <- paste(path, '/data/', sep = '')
 
 #Load and clean data
-Data3 <- read.csv(paste(datadir, "Smart_Summit_All_Data.csv", sep = ''),
+Data <- read.csv(paste(datadir, "Smart_Summit_All_Data.csv", sep = ''),
                   header = T, na.strings = '')
-Data3 <- Data3[rowSums(is.na(Data3)) != ncol(Data3),]
+Data <- Data[rowSums(is.na(Data)) != ncol(Data),]
 
-df <- Data3[,23:35]
+df <- Data[,23:35]
 names(df)
 
 targets <- df[,1:6]
