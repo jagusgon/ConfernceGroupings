@@ -33,14 +33,11 @@ for(i in 1:nrow(mSum)){
         L[[i]] <- y
 }
 
-L[[1]]
-
 # Put list into a dataframe
 CompaniesToMeet <- data.frame(matrix(0, nrow = length(L), ncol = length(L)))
 for(i in 1:length(L)){
         for(j in 1:length(L[[i]])){
                 CompaniesToMeet[j,i] <- L[[i]][j]
-
         }
 }
 
@@ -52,7 +49,7 @@ DeligatesToMeet <- data.frame(matrix(as.character(''), nrow = nrow(CompaniesToMe
                                      ncol = ncol(CompaniesToMeet)), stringsAsFactors = F)
 
 names(DeligatesToMeet) <- 1:ncol(CompaniesToMeet)
-Deligates <- Data3[,c(4:6, 8)]
+Deligates <- Data[,c(4:6, 8)]
 # Put the deligates and affilations into a character vector
 DeligatesList <- character()
 for(i in 1:nrow(Deligates)){
@@ -80,24 +77,14 @@ for(i in 1:ncol(CompaniesToMeet)){
         }
 }
 
-for(i)
+write.csv(DeligatesToMeet, 'CompanyMatches.csv', row.names = F)
 
-length(DeligatesList)
 
-head(DeligatesToMeet[38])
-temp
 #lapply(L, write, 'test4.txt', append=T, sep=', ', ncolumns=1000)
 
-str(L)
 maxLength <- 0
 for(i in 1:length(L)){
         if(length(L[[i]]) > maxLength){
                 maxLength <- length(L[[i]])
         }
 }
-
-
-df <- data.frame(matrix(unlist(l), nrow=132, byrow=T))
-
-test <- data.frame(matrix(unlist(L), ncol = 482, nrow = maxLength, byrow = F))
-        

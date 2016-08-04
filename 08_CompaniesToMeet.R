@@ -6,10 +6,10 @@ path <- getwd()
 datadir <- paste(path, '/data/', sep = '')
 
 #Load and clean data
-Data3 <- read.csv(paste(datadir, "Smart_Summit_All_Data.csv", sep = ''),
+Data <- read.csv(paste(datadir, "Smart_Summit_All_Data.csv", sep = ''),
                   header = T, na.strings = '')
-Data3 <- Data3[rowSums(is.na(Data3)) != ncol(Data3),]
-DF3 <- Data3[,19:22]
+Data <- Data[rowSums(is.na(Data)) != ncol(Data),]
+DF3 <- Data[,19:22]
 names(DF3)[c(2,4)] <- c("OtherCompany", "OtherValueInMeeting")
 
 targets <- DF3[,1:2]
