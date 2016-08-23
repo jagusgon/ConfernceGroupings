@@ -1,4 +1,6 @@
 library(lsa)
+source('GetMatches.R')
+source('CompanyMatchesOutput.R')
 
 # make empty matrix for for values to be added
 m <- matrix(0, nrow = nrow(usersSpread), ncol = nrow(tarSpread))
@@ -52,35 +54,23 @@ L <- list()
 for(i in 1:nrow(mSum)){
         x <- which(mSum[i,] > 1, arr.ind = T)
         y <- x[x != i]
+        if(length(y) == 0){
+                y <- 0
+        }
         L[[i]] <- y
 }
 
 
-total <- 0
-for(i in 1:length(L)){
-        total <- total+length(L[[i]])
-}
-total/length(L)
 
-lapply(L, write, 'MatchingKnowdledge03.txt', append=T, sep=', ', ncolumns=1000)
+# L is a list of matches
+# Here there is a list of matches. Now get that into suitable output
+# This puts the list of names of matches column-wise. Each column is
+# a delgate, with the rows being the matches. Not a great output.
+DelegatesToMeet <- GetMatches(L, Data)
 
+# This puts the data into a four-column dataframe, with the list of matches 
+# as one \n-separated string in the fourth column.
+KnowledgeMatchesOutput <- GetCompanyMatchesOutput(Data, DelegatesToMeet)
 
-one <- 256
-two <- 277
-vec1 <- as.vector(usersTidy[two,], mode = 'numeric')
-vec2 <- as.vector(tarTidy[one,], mode = 'numeric')
-vec1
-vec2
+write.xlsx(KnowledgeMatchesOutput, 'KnowledgeMatches.xlsx', row.names = F)
 
-usersTidy[281,]
-tarTidy[254,]
-cosine(vec1, vec2)
-mSum[281,]
-musers[281,]
-x <- distanceToTargets(musers[281,])
-table(is.na(x))
-table(x)
-which(x == max(x))
-usersTidy[281,]
-tarTidy[296,]
-which(x < 0.15 & x > 0)

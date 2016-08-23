@@ -1,5 +1,6 @@
 library(lsa)
 source('GetMatches.R')
+source('CompanyMatchesOutput.R')
 
 # make empty matrix for for values to be added
 m <- matrix(0, nrow = nrow(usersSpread), ncol = nrow(tarSpread))
@@ -35,9 +36,13 @@ for(i in 1:nrow(mSum)){
 }
 
 # Here thre is a list of matches. Now get that into suitable output
+# This puts the list of names of matches column-wise. Each column is
+# a delgate, with the rows being the matches. Not a great output.
 DelegatesToMeet <- GetMatches(L, Data)
+
+# This puts the data into a four-column dataframe, with the list of matches 
+# as one \n-separated string in the fourth column.
 CompanyMatchesOutput <- GetCompanyMatchesOutput(Data, DelegatesToMeet)
 
-#write.csv(DelegatesToMeet, 'CompanyMatches.csv', row.names = F)
 write.xlsx(CompanyMatchesOutput, 'CompanyMatches.xlsx', row.names = F)
 

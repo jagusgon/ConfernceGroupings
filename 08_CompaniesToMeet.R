@@ -59,11 +59,6 @@ names(usersSpread) <- userNames
 tarSpread <- tarSpread[, names(tarSpread) %in% userNames]
 
 #Get the columns the dataframes to be in the same order
-# dim(tarSpread)
-# dim(usersSpread)
-# names(tarSpread)
-# names(usersSpread)
- 
 index <- integer()
 for(name in names(tarSpread)){
         index <- c(index, which(names(usersSpread) == name))

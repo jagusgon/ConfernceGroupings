@@ -53,4 +53,5 @@ for(name in names(tarTidy)){
         index <- c(index, which(names(usersTidy) == name))
 }
 usersTidy <- usersTidy[, index]
+
 identical(names(usersTidy), names(tarTidy))
