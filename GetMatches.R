@@ -4,7 +4,7 @@
 # will be different, corresponding to different numbers of suitable matches per 
 # delegate. 
 # 
-# It tages the arguments of L (the list generated from the matrix matching) and 
+# It takes the arguments of L (the list generated from the matrix matching) and 
 # Data, which is the original dataset. Data should have the first four columns of:
 # names(Data)[c(4:6, 8)] <- [1] "Title"      "First.Name" "Surname"    "Company"  
 
@@ -38,6 +38,7 @@ GetMatches <- function(L, Data){
                 DelegatesList[i] <- gsub(' , ', ', ', DelegatesList[i])
         }
         
+        # Substitutes column numbers with delegate names
         for(i in 1:length(names(DelegatesToMeet))){
                 names(DelegatesToMeet)[i] <- paste(Delegates[i,1],
                                                    Delegates[i,2],

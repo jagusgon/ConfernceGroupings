@@ -34,5 +34,12 @@ for(i in 1:nrow(mSum)){
         L[[i]] <- y
 }
 
+# Here thre is a list of matches. Now get that into suitable output
 DelegatesToMeet <- GetMatches(L, Data)
 write.csv(DelegatesToMeet, 'CompanyMatches.csv', row.names = F)
+
+head(DelegatesToMeet)
+dim(DelegatesToMeet)
+DelegatesToMeet[,482]
+DelegatesToMeet[,159]
+names(DelegatesToMeet)[159]
