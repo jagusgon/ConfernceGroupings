@@ -36,10 +36,8 @@ for(i in 1:nrow(mSum)){
 
 # Here thre is a list of matches. Now get that into suitable output
 DelegatesToMeet <- GetMatches(L, Data)
-write.csv(DelegatesToMeet, 'CompanyMatches.csv', row.names = F)
+CompanyMatchesOutput <- GetCompanyMatchesOutput(Data, DelegatesToMeet)
 
-head(DelegatesToMeet)
-dim(DelegatesToMeet)
-DelegatesToMeet[,482]
-DelegatesToMeet[,159]
-names(DelegatesToMeet)[159]
+#write.csv(DelegatesToMeet, 'CompanyMatches.csv', row.names = F)
+write.xlsx(CompanyMatchesOutput, 'testNewFifth.xlsx', row.names = F)
+
