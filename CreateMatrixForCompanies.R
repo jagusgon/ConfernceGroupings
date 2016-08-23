@@ -39,5 +39,5 @@ DelegatesToMeet <- GetMatches(L, Data)
 CompanyMatchesOutput <- GetCompanyMatchesOutput(Data, DelegatesToMeet)
 
 #write.csv(DelegatesToMeet, 'CompanyMatches.csv', row.names = F)
-write.xlsx(CompanyMatchesOutput, 'testNewFifth.xlsx', row.names = F)
+write.xlsx(CompanyMatchesOutput, 'CompanyMatches.xlsx', row.names = F)
 
