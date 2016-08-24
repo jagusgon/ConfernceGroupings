@@ -44,5 +44,9 @@ DelegatesToMeet <- GetMatches(L, Data)
 # as one \n-separated string in the fourth column.
 CompanyMatchesOutput <- GetCompanyMatchesOutput(Data, DelegatesToMeet)
 
+<<<<<<< HEAD
+=======
+#write.csv(DelegatesToMeet, 'CompanyMatches.csv', row.names = F)
+>>>>>>> 110ba4002d579dc3b5f1b38bdb7cdad347db6140
 write.xlsx(CompanyMatchesOutput, 'CompanyMatches.xlsx', row.names = F)
 
