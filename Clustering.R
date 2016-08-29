@@ -38,6 +38,11 @@ Delegates$group <- KMclustering$cluster
 write.xlsx(Delegates, 'groups.xlsx', row.names = F)
 
 
+table(DFSpread$cluster)
+
+# See where the delegates with missing survey data are clustering
+rowSums(DFSpread[, -106])
+colSums(DFSpread[rowSums(DFSpread[,-106]) == 1,])
 
 
 
