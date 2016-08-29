@@ -1,4 +1,5 @@
 library(lsa)
+library(xlsx)
 source('GetMatches.R')
 source('CompanyMatchesOutput.R')
 
