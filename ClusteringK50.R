@@ -6,12 +6,12 @@ path <- getwd()
 datadir <- paste(path, '/data/', sep = '')
 
 #Load and clean data
-Data <- read.csv(paste(datadir, "Smart_Summit_All_Data.csv", sep = ''),
+Data <- read.csv(paste(datadir, "Milestone2utf8.csv", sep = ''),
                  header = T, na.strings = '')
 Data <- Data[rowSums(is.na(Data)) != ncol(Data),]
 
 # Changed from first version...now only grouping on interest in further learning
-DF <- Data[,30:35]
+DF <- Data[,28:33]
 #names(DF)[c(3,5)] <- c("OtherCompany", "OtherValueInMeeting")
 
 removeBlanks <- function(df){
@@ -26,7 +26,9 @@ DF <- AddUnderscores(DF)
 DFSpread <- SpreadResponses(DF)
 
 # Remove columns with no predictive power
-drops <- c('Other', 'na', 'N/A', '---_please_select_---')
+drops <- c('Other', 'na', 'N/A', '.*please.*select.*', 'NEED.*INFO',
+           'NEED_INFO', '---_please_select_---', 'n/a', '-', '.', 'none',
+           'X', '%', 'N/a', 'No_interest', 'None')
 DFSpread <- DFSpread[ , !(names(DFSpread) %in% drops)]
 
 KMclustering <- kmeans(DFSpread, 50, nstart = 1)
@@ -36,28 +38,43 @@ KMclustering$withinss
 
 Delegates <- Data[,c(5,6,9)] #FirstName, Surname, email
 Delegates$group <- KMclustering$cluster
-#write.xlsx(Delegates, 'groups.xlsx', row.names = F)
+#write.xlsx(Delegates, 'groupsM2.xlsx', row.names = F)
 
-
-table(DFSpread$cluster)
+Delegates[994,]
+mean(count(Delegates$group[Delegates$group != 42])$freq)
 
 # See where the delegates with missing survey data are clustering
 DFSpread$cluster <- KMclustering$cluster
-rowSums(DFSpread[, -106])
-colSums(DFSpread[rowSums(DFSpread[,-106]) == 1,])
-
+rowSums(DFSpread[, -39])
+colSums(DFSpread[rowSums(DFSpread[,-39]) == 1,])
+sum(colSums(DFSpread[rowSums(DFSpread[,-39]) == 1,]))
 
 
 # Diagnostics
 #############################################
-getTop10Facotrs <- function(data, clust){
-        group <- data[data$cluster == clust, -28]
-        head(sort((colSums(group)*100/nrow(data)), decreasing = T), n=10)
+getTop10Factors <- function(data, clust){
+        group <- data[data$cluster == clust, -39]
+        return(head(round(sort((colSums(group)*100/nrow(group)), 
+                               decreasing = T)), n=10))
 }
 
-One <- getTop10Facotrs(DFSpread, 1)
-Three <- getTop10Facotrs(DFSpread, 3)
-seventeen <- getTop10Facotrs(DFSpread, 17)
+
+# This puts the top 10 factors of each group into a dataframe
+GroupsDescription <- data.frame(matrix('',nrow=10, ncol=50))
+names(GroupsDescription) <- as.character(1:50)
+for(i in 1:50){
+        temp <- getTop10Factors(DFSpread, i)
+        GroupsDescription[,i] <- names(temp)
+}
+
+head(GroupsDescription)
+
+#write.xlsx(GroupsDescription, 'DescriptionOfGroupsM2.xlsx', row.names = F)
+
+FourtyTwo <- getTop10Factors(DFSpread, 42)
+One <- getTop10Factors(DFSpread, 1)
+Three <- getTop10Factors(DFSpread, 3)
+seventeen <- getTop10Factors(DFSpread, 17)
 names(Three) %in% names(One)
 table(Three)
 names(seventeen)

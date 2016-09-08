@@ -10,11 +10,11 @@ path <- getwd()
 datadir <- paste(path, '/data/', sep = '')
 
 #Load and clean data
-Data <- read.csv(paste(datadir, "Smart_Summit_All_Data.csv", sep = ''),
+Data <- read.csv(paste(datadir, "Milestone2utf8.csv", sep = ''),
                  header = T, na.strings = '')
 Data <- Data[rowSums(is.na(Data)) != ncol(Data),]
 
-df <- Data[,23:35]
+df <- Data[,21:33]
 names(df)
 
 targets <- df[,1:6]
@@ -28,9 +28,14 @@ targets <- AddUnderscores(targets)
 tarSpread <- SpreadResponses(targets)
 names(tarSpread)
 # Remove columns with no predictive power
-drops <- c('Other', 'na', 'N/A', '---_please_select_---')
+drops <- c('Other', 'na', 'N/A', '.*please.*select.*', 'NEED.*INFO',
+           'NEED_INFO', '---_please_select_---', 'n/a', '-', '.', 'none',
+           'X')
+
+#drops <- c('Other', 'na', 'N/A', '---_please_select_---')
 tarSpread <- tarSpread[, !names(tarSpread) %in% drops]
 colSums(tarSpread)
+names(tarSpread)
 
 users <- AddUnderscores(users)
 usersSpread <- SpreadResponses(users)
@@ -56,6 +61,12 @@ index <- integer()
 for(name in names(tarTidy)){
         index <- c(index, which(names(usersTidy) == name))
 }
+
+names(usersTidy)[index]
+names(tarTidy)
+
+identical(names(usersTidy)[index], names(tarTidy))
+
 usersTidy <- usersTidy[, index]
 
 # make empty matrix for for values to be added
@@ -119,4 +130,4 @@ DelegatesToMeet <- GetMatches(L, Data)
 # as one \n-separated string in the fourth column.
 KnowledgeMatchesOutput <- GetCompanyMatchesOutput(Data, DelegatesToMeet)
 
-write.xlsx(KnowledgeMatchesOutput, 'KnowledgeMatchesTop25.xlsx', row.names = F)
+write.xlsx(KnowledgeMatchesOutput, 'KnowledgeMatchesTop25_M2.xlsx', row.names = F)

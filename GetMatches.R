@@ -30,8 +30,7 @@ GetMatches <- function(L, Data){
         # Put the Delegates and affilations into a character vector
         DelegatesList <- character()
         for(i in 1:nrow(Delegates)){
-                DelegatesList[i] <- paste(Delegates[i,1],
-                                          Delegates[i,2],
+                DelegatesList[i] <- paste(Delegates[i,2], #removed title
                                           Delegates[i,3],
                                           ',',
                                           Delegates[i,4])
@@ -40,8 +39,7 @@ GetMatches <- function(L, Data){
         
         # Substitutes column numbers with delegate names
         for(i in 1:length(names(DelegatesToMeet))){
-                names(DelegatesToMeet)[i] <- paste(Delegates[i,1],
-                                                   Delegates[i,2],
+                names(DelegatesToMeet)[i] <- paste(Delegates[i,2], #removed title
                                                    Delegates[i,3])
         }
         

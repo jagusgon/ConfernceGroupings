@@ -13,7 +13,7 @@ path <- getwd()
 datadir <- paste(path, '/data/', sep = '')
 
 #Load and clean data
-Data <- read.csv(paste(datadir, "Milestone2.csv", sep = ''),
+Data <- read.csv(paste(datadir, "Milestone2utf8.csv", sep = ''),
                   header = T, na.strings = '')
 Data <- Data[rowSums(is.na(Data)) != ncol(Data),]
 
@@ -158,5 +158,5 @@ DelegatesToMeet <- GetMatches(L, Data)
 CompanyMatchesOutput <- GetCompanyMatchesOutput(Data, DelegatesToMeet)
 
 #write.csv(DelegatesToMeet, 'CompanyMatches.csv', row.names = F)
-write.xlsx(CompanyMatchesOutput, 'CompanyMatchesMS2.xlsx', row.names = F)
+#write.xlsx(CompanyMatchesOutput, 'CompanyMatchesMS2.xlsx', row.names = F)
 

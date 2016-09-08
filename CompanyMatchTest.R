@@ -1,4 +1,4 @@
-Data$Surname[52]
+Data$Surname[958]
 testUser <- usersSpread[52,]
 tarSpread[55,]
 
@@ -17,10 +17,19 @@ TestMatchStrength <- function(user, targetName){
                         count <- count + 1
                 }
         }
+        #print(Data$Like.to.Meet[user])
+        #print(Data$Industry.All[Data$Surname == targetName])
         print(colMeans(Result))
 }
 
-TestMatchStrength(52, 'Lawton')
+TestMatchStrength(958, 'Krause')
+TestMatchStrength(78, 'Crossley')
+
+Data$Surname[958]
+Data$Surname[78]
+
+
+
 
 usersSpread[52,]
 tarSpread[973,]
