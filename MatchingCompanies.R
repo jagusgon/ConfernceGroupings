@@ -33,7 +33,6 @@ targets <- DF3[,1]
 
 # Put underscores between words, but not between answers
 targets <- AddUnderscores(as.data.frame(targets))
-str(targets)
 #Spread responses
 tarSpread <- SpreadResponses(as.data.frame(targets))
 
@@ -48,7 +47,6 @@ tarSpread <- tarSpread[,names(tarSpread) != 'Utility']
 
 users <- DF3[,2]
 users <- AddUnderscores(as.data.frame(users))
-str(users)
 #Sys.setlocale('LC_ALL','') 
 usersSpread <- SpreadResponses(as.data.frame(users)) ###problem here!
 names(usersSpread)[10] <- 'Smart_Home_OEM' ###Must verify this each time!
@@ -68,15 +66,6 @@ usersSpread <- usersSpread[, !names(usersSpread) %in% drops]
 
 tarSpread <- tarSpread[,sort(names(tarSpread))]
 usersSpread <- usersSpread[,sort(names(usersSpread))]
-
-names(usersSpread)
-names(tarSpread)
-
-sort(names(usersSpread))
-test <- usersSpread
-colSums(test)
-test2 <- test[,sort(names(test))]
-colSums(test2)
 
 #Will remove the variables in users that do not appear in targets
 #usersSpread <- usersSpread[,-c(17, 18, 24:28)]
@@ -120,6 +109,7 @@ m <- matrix(0, nrow = nrow(usersSpread), ncol = nrow(tarSpread))
 musers <- as.matrix(usersSpread)
 mtargets <- as.matrix(tarSpread)
 
+# This is a time-consuming step:
 distanceToTargets <- function(user, targets = mtargets){
         distances <- numeric()
         for(i in 1:nrow(targets)){
@@ -133,7 +123,6 @@ distanceToTargets <- function(user, targets = mtargets){
 for(i in 1:nrow(musers)){
         m[i,] <- distanceToTargets(musers[i,])
 }
-head(m)
 
 mSum <- m + t(m)
 
@@ -151,12 +140,13 @@ for(i in 1:nrow(mSum)){
 # Here thre is a list of matches. Now get that into suitable output
 # This puts the list of names of matches column-wise. Each column is
 # a delgate, with the rows being the matches. Not a great output.
-DelegatesToMeet <- GetMatches(L, Data)
+DelegatesToMeet <- GetMatches(L, Data) # SLOW!!!
 
 # This puts the data into a four-column dataframe, with the list of matches 
 # as one \n-separated string in the fourth column.
 CompanyMatchesOutput <- GetCompanyMatchesOutput(Data, DelegatesToMeet)
 
 #write.csv(DelegatesToMeet, 'CompanyMatches.csv', row.names = F)
+
 #write.xlsx(CompanyMatchesOutput, 'CompanyMatchesMS2.xlsx', row.names = F)
 
