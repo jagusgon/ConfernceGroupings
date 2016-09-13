@@ -21,6 +21,8 @@ TestMatchStrength <- function(user, targetName){
 }
 
 TestMatchStrength(4, 'Shaw')
+Data$Surname[1467]
+TestMatchStrength(1467, 'Aydiner')
 
 
 testTargetRow <- row.names(Data[Data$Surname == 'Kelmendi',])

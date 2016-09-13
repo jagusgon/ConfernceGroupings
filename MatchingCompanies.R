@@ -13,7 +13,11 @@ path <- getwd()
 datadir <- paste(path, '/data/', sep = '')
 
 #Load and clean data
-Data <- read.csv(paste(datadir, "Milestone2utf8.csv", sep = ''),
+FileMS2 <- 'Milestone2utf8.csv'
+File130916 <- 'SSL_Reg_13.09.16.csv'
+
+
+Data <- read.csv(paste(datadir, File130916, sep = ''),
                   header = T, na.strings = '')
 Data <- Data[rowSums(is.na(Data)) != ncol(Data),]
 
@@ -49,46 +53,14 @@ users <- DF3[,2]
 users <- AddUnderscores(as.data.frame(users))
 #Sys.setlocale('LC_ALL','') 
 usersSpread <- SpreadResponses(as.data.frame(users)) ###problem here!
-names(usersSpread)[10] <- 'Smart_Home_OEM' ###Must verify this each time!
-usersSpread$Distributors[usersSpread$Distributors_ == 1] <- 1
-usersSpread <- usersSpread[, names(usersSpread) != 'Distributors_']
-usersSpread$Manufacturers[usersSpread$Manufacturers_ == 1] <- 1
-usersSpread <- usersSpread[, names(usersSpread) != 'Manufacturers_']
-usersSpread$System_Integrators[usersSpread$System_Integrators_ == 1] <- 1
-usersSpread <- usersSpread[, names(usersSpread) != 'System_Integrators_']
-usersSpread$Smart_Home_OEM[usersSpread$`Smart_Home_OEM's` == 1] <- 1
-usersSpread <- usersSpread[, names(usersSpread) != "Smart_Home_OEM's"]
-usersSpread <- usersSpread[, names(usersSpread) != 
-                                   'I_have_limited_knowledge_in_Smart_Home']
-usersSpread <- usersSpread[, names(usersSpread) != 
-                                   'Security_and_Privacy_in_the_Smart_Home']
-usersSpread <- usersSpread[, !names(usersSpread) %in% drops]
 
-tarSpread <- tarSpread[,sort(names(tarSpread))]
-usersSpread <- usersSpread[,sort(names(usersSpread))]
 
-#Will remove the variables in users that do not appear in targets
-#usersSpread <- usersSpread[,-c(17, 18, 24:28)]
 
-# Change names of users df
-# x <- names(tarSpread)
-# userNames <- x[c(1, 23, 21, 13, 
-#                  4, 9, 3, 14,
-#                  8, 12, 15, 7,
-#                  9, 13, 10, 17, 
-#                  6, 19, 16, 18, 
-#                  11, 20, 2, )]
-# userNames <- x[c(4, 23, 21, 13, 
-#                  4, 9, 3, 14,
-#                  8, 12, 15, 7,
-#                  9, 13, 10, 17, 
-#                  6, 19, 16, 18, 
-#                  11, 20, 2, )]
+#### Go to CleanNames.R here!!!!!!!!!!!!!!
 
-# Make sure it worked
-# for(i in 1:22){
-#         print(names(tarSpread[i])); print(names(usersSpread)[i])
-# }
+
+
+
 
 # Get both dataframes to have the same attributes
 names(usersSpread) <- names(tarSpread)
@@ -148,5 +120,5 @@ CompanyMatchesOutput <- GetCompanyMatchesOutput(Data, DelegatesToMeet)
 
 #write.csv(DelegatesToMeet, 'CompanyMatches.csv', row.names = F)
 
-#write.xlsx(CompanyMatchesOutput, 'CompanyMatchesMS2.xlsx', row.names = F)
+write.xlsx(CompanyMatchesOutput, 'CompanyMatchesMS2_1.xlsx', row.names = F)
 

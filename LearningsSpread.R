@@ -6,7 +6,9 @@ path <- getwd()
 datadir <- paste(path, '/data/', sep = '')
 
 #Load and clean data
-Data <- read.csv(paste(datadir, "Milestone2utf8.csv", sep = ''),
+FileMS2 <- 'Milestone2utf8.csv'
+File130916 <- 'SSL_Reg_13.09.16.csv'
+Data <- read.csv(paste(datadir, File130916, sep = ''),
                  header = T, na.strings = '')
 Data <- Data[rowSums(is.na(Data)) != ncol(Data),]
 
@@ -35,4 +37,4 @@ Delegates <- Data[,c(5,6,9)] #FirstName, Surname, email
 
 LearningsSpread <- cbind(Delegates, DFSpread)
 
-write.xlsx(LearningsSpread, 'LearningsSpread.xlsx', row.names = F)
+write.xlsx(LearningsSpread, 'LearningsSpread2.xlsx', row.names = F)

@@ -1,4 +1,4 @@
-Data$Surname[958]
+Data$Surname[1007]
 testUser <- usersSpread[52,]
 tarSpread[55,]
 
@@ -22,8 +22,10 @@ TestMatchStrength <- function(user, targetName){
         print(colMeans(Result))
 }
 
-TestMatchStrength(958, 'Krause')
+TestMatchStrength(1007, 'Morton')
 TestMatchStrength(78, 'Crossley')
+Data[99,]
+Data[1007,]
 
 Data$Surname[958]
 Data$Surname[78]
