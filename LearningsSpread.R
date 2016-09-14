@@ -33,8 +33,8 @@ drops <- c('Other', 'na', 'N/A', '.*please.*select.*', 'NEED.*INFO',
            'X', '%', 'N/a', 'No_interest', 'None')
 DFSpread <- DFSpread[ , !(names(DFSpread) %in% drops)]
 
-Delegates <- Data[,c(5,6,9)] #FirstName, Surname, email
+Delegates <- Data[,c(5,6,8,9)] #FirstName, Surname, email
 
 LearningsSpread <- cbind(Delegates, DFSpread)
 
-write.xlsx(LearningsSpread, 'LearningsSpread2.xlsx', row.names = F)
+write.xlsx(LearningsSpread, 'LearningsSpreadWithCompanies.xlsx', row.names = F)

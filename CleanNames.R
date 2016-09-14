@@ -33,7 +33,19 @@ CombineSimilarColumns <- function(df, a, b){
 
 a <- 'Insurance_Companies'
 b <- 'Insurance_Company'
-tarSpread <- CombineSimilarColumns(tarSpread, 'Construction_Companies', 'Construction_Company')
+table(tarSpread[[a]])
+table(tarSpread[[b]])
+tarSpread <- CombineSimilarColumns(tarSpread, a, b)
+table(tarSpread[[a]])
+table(tarSpread[[b]])
+
+a <- 'Construction_Companies'
+b <- 'Construction_Company'
+table(tarSpread[[a]])
+table(tarSpread[[b]])
+tarSpread <- CombineSimilarColumns(tarSpread, a, b)
+table(tarSpread[[a]])
+table(tarSpread[[b]])
 
 
 a <- 'Manufacturers'

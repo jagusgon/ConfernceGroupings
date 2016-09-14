@@ -57,7 +57,7 @@ usersSpread <- SpreadResponses(as.data.frame(users)) ###problem here!
 
 
 #### Go to CleanNames.R here!!!!!!!!!!!!!!
-
+source('CleanNames.R')
 
 
 
