@@ -1,4 +1,4 @@
-# Use this script to match attendees based on knowledge, '3.1'
+# Use this script to test knowledge matches with the function at the bottom
 
 source('AddUnderscores.R')
 source('SpreadResponses.R')
@@ -170,7 +170,7 @@ RankDistanceToTargets <- function(user, targets){
                         tempDF[i,] <- 0
                 }
         }
-        return(tempDF[order(tempDF$distance, decreasing = T)[1:25],1])
+        return(tempDF[order(tempDF$distance, decreasing = T)[1],])
 }
 
 L <- list()
@@ -186,7 +186,23 @@ for(i in 1:nrow(mSum)){
         }
 }
 
-# x <- which(mSum[1468,] > 1, arr.ind = T)
+# L[[4]]
+# x <- which(mSum[4,] > 1, arr.ind = T)
+# x
+# targets <- x
+# user <- 4
+# RankDistanceToTargets(4, 24)
+# row.names(Data[Data$Surname == 'Fox',])
+# row.names(Data[Data$Surname == 'Mirza',])
+# RankDistanceToTargets(639, 284)
+
+source('TestKnowledgeMatches.R')
+TestKnowledgeMatches()
+
+
+
+
+
 # y <- x[x != 1468]
 # targets <- y
 # user <- 1468
