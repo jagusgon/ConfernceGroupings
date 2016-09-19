@@ -8,7 +8,9 @@ datadir <- paste(path, '/data/', sep = '')
 #Load and clean data
 FileMS2 <- 'Milestone2utf8.csv'
 File130916 <- 'SSL_Reg_13.09.16.csv'
-Data <- read.csv(paste(datadir, File130916, sep = ''),
+File190916 <- 'Registration19Sept.csv'
+
+Data <- read.csv(paste(datadir, File190916, sep = ''),
                  header = T, na.strings = '')
 Data <- Data[rowSums(is.na(Data)) != ncol(Data),]
 
@@ -30,11 +32,11 @@ DFSpread <- SpreadResponses(DF)
 # Remove columns with no predictive power
 drops <- c('Other', 'na', 'N/A', '.*please.*select.*', 'NEED.*INFO',
            'NEED_INFO', '---_please_select_---', 'n/a', '-', '.', 'none',
-           'X', '%', 'N/a', 'No_interest', 'None')
+           'X', 'None', 'N/a', 'No_interest', '%', 'n.a', 'tbc', 'n.a.', 'NA')
 DFSpread <- DFSpread[ , !(names(DFSpread) %in% drops)]
 
-Delegates <- Data[,c(5,6,8,9)] #FirstName, Surname, email
+Delegates <- Data[,c(5,6,8,9)] #FirstName, Surname, company, email
 
 LearningsSpread <- cbind(Delegates, DFSpread)
 
-write.xlsx(LearningsSpread, 'LearningsSpreadWithCompanies.xlsx', row.names = F)
+write.xlsx(LearningsSpread, 'LearningsSpreadWithCompanies_M3.xlsx', row.names = F)

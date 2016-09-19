@@ -15,10 +15,15 @@ datadir <- paste(path, '/data/', sep = '')
 #Load and clean data
 FileMS2 <- 'Milestone2utf8.csv'
 File130916 <- 'SSL_Reg_13.09.16.csv'
+File190916 <- 'Registration19Sept.csv'
 
 
-Data <- read.csv(paste(datadir, File130916, sep = ''),
+Data <- read.csv(paste(datadir, File190916, sep = ''),
                   header = T, na.strings = '')
+# Data2 <- read.csv(paste(datadir, File130916, sep = ''),
+#                  header = T, na.strings = '')
+# identical(names(Data)[1:39], names(Data2)[1:39])
+
 Data <- Data[rowSums(is.na(Data)) != ncol(Data),]
 
 DF3 <- Data[,19:20]
@@ -42,18 +47,24 @@ tarSpread <- SpreadResponses(as.data.frame(targets))
 
 # Tidy up column names. This is manual and is difficult. USE CARE!!!
 # Remove columns with no predictive power
+names(tarSpread)
 drops <- c('Other', 'na', 'N/A', '.*please.*select.*', 'NEED.*INFO',
            'NEED_INFO', '---_please_select_---')
+
 #Only works if there is an exact match, not for regex:
 tarSpread <- tarSpread[, !names(tarSpread) %in% drops]
-tarSpread$Utility_Company[tarSpread$Utility == 1] <- 1
-tarSpread <- tarSpread[,names(tarSpread) != 'Utility']
+tarSpread <- tarSpread[,sort(names(tarSpread))]
+
+# Put this into CleanNames.R
+# tarSpread$Utility_Company[tarSpread$Utility == 1] <- 1
+# tarSpread <- tarSpread[,names(tarSpread) != 'Utility']
 
 users <- DF3[,2]
 users <- AddUnderscores(as.data.frame(users))
 #Sys.setlocale('LC_ALL','') 
 usersSpread <- SpreadResponses(as.data.frame(users)) ###problem here!
-
+names(usersSpread)
+usersSpread <- usersSpread[,sort(names(usersSpread))]
 
 
 #### Go to CleanNames.R here!!!!!!!!!!!!!!
@@ -120,5 +131,5 @@ CompanyMatchesOutput <- GetCompanyMatchesOutput(Data, DelegatesToMeet)
 
 #write.csv(DelegatesToMeet, 'CompanyMatches.csv', row.names = F)
 
-write.xlsx(CompanyMatchesOutput, 'CompanyMatchesMS2_1.xlsx', row.names = F)
+write.xlsx(CompanyMatchesOutput, 'CompanyMatchesMS3.xlsx', row.names = F)
 

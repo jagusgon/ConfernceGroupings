@@ -12,9 +12,12 @@ datadir <- paste(path, '/data/', sep = '')
 #Load and clean data
 FileMS2 <- 'Milestone2utf8.csv'
 File130916 <- 'SSL_Reg_13.09.16.csv'
+File190916 <- 'Registration19Sept.csv'
 
-Data <- read.csv(paste(datadir, File130916, sep = ''),
+
+Data <- read.csv(paste(datadir, File190916, sep = ''),
                  header = T, na.strings = '')
+
 Data <- Data[rowSums(is.na(Data)) != ncol(Data),]
 
 df <- Data[,21:33]
@@ -33,12 +36,26 @@ names(tarSpread)
 # Remove columns with no predictive power
 drops <- c('Other', 'na', 'N/A', '.*please.*select.*', 'NEED.*INFO',
            'NEED_INFO', '---_please_select_---', 'n/a', '-', '.', 'none',
-           'X', 'None', 'N/a', 'No_interest', '%', 'n.a', 'tbc', 'n.a.')
+           'X', 'None', 'N/a', 'No_interest', '%', 'n.a', 'tbc', 'n.a.', 'NA')
 
 #drops <- c('Other', 'na', 'N/A', '---_please_select_---')
 tarSpread <- tarSpread[, !names(tarSpread) %in% drops]
 colSums(tarSpread)
 names(tarSpread)
+
+CombineSimilarColumns <- function(df, a, b){
+        # Takes entries from column b and puts them into col a, then removes
+        # col b. Use this when two columns have slightly different names but
+        # tell the same information.
+        df[[a]][df[[b]] == 1] <- 1
+        df <- df[, names(df) != b]
+        return(df)
+}
+# Clean up tarSpread
+names(tarSpread)[names(tarSpread) == 'wireless_connectivity'] <- 'Wireless_connectivity'
+
+
+
 
 users <- AddUnderscores(users)
 usersSpread <- SpreadResponses(users)
@@ -49,11 +66,40 @@ usersSpread <- usersSpread[,sort(names(usersSpread))]
 tarSpread <- tarSpread[,sort(names(tarSpread))]
 
 
-usersSpread$Robotics_and_AI[usersSpread$Robotics_and_AI_ == 1] <- 1
-usersSpread <- usersSpread[,names(usersSpread) != 'Robotics_and_AI_']
+names(usersSpread)
+a <- 'Robotics_and_AI'
+b <- 'Robotics_and_AI_'
+table(usersSpread[[a]])
+table(usersSpread[[b]])
+usersSpread <- CombineSimilarColumns(usersSpread, a, b)
+table(usersSpread[[a]])
+table(usersSpread[[b]])
+names(usersSpread)
+
+# usersSpread$Robotics_and_AI[usersSpread$Robotics_and_AI_ == 1] <- 1
+# usersSpread <- usersSpread[,names(usersSpread) != 'Robotics_and_AI_']
 #africa <- 'Smart_technology_African_cities'
 # names(tarSpread)[34] <- africa
 # names(usersSpread)[25] <- africa
+
+a <- 'information_security'
+b <- 'inforamtion_security'
+table(usersSpread[[a]])
+table(usersSpread[[b]])
+usersSpread <- CombineSimilarColumns(usersSpread, a, b)
+table(usersSpread[[a]])
+table(usersSpread[[b]])
+names(usersSpread)
+
+a <- 'software_development'
+b <- 'Software'
+table(usersSpread[[a]])
+table(usersSpread[[b]])
+usersSpread <- CombineSimilarColumns(usersSpread, a, b)
+table(usersSpread[[a]])
+table(usersSpread[[b]])
+names(usersSpread)
+
 
 # Now remove the columns in users that do not appear in targets
 names(tarSpread)
@@ -164,4 +210,4 @@ DelegatesToMeet <- GetMatches(L, Data)
 # as one \n-separated string in the fourth column.
 KnowledgeMatchesOutput <- GetCompanyMatchesOutput(Data, DelegatesToMeet)
 
-write.xlsx(KnowledgeMatchesOutput, 'KnowledgeMatchesTop25_M2_1.xlsx', row.names = F)
+write.xlsx(KnowledgeMatchesOutput, 'KnowledgeMatchesTop25_M3.xlsx', row.names = F)

@@ -4,6 +4,7 @@ names(usersSpread)
 
 names(usersSpread)[19] <- 'Smart_Home_OEM' ###Must verify this each time!
 names(usersSpread)[20] <- 'Smart_Home_OEMs'
+
 usersSpread$Distributors[usersSpread$Distributors_ == 1] <- 1
 usersSpread <- usersSpread[, names(usersSpread) != 'Distributors_']
 usersSpread$Manufacturers[usersSpread$Manufacturers_ == 1] <- 1
@@ -30,7 +31,7 @@ CombineSimilarColumns <- function(df, a, b){
         return(df)
 }
 
-
+names(tarSpread)
 a <- 'Insurance_Companies'
 b <- 'Insurance_Company'
 table(tarSpread[[a]])
@@ -39,6 +40,7 @@ tarSpread <- CombineSimilarColumns(tarSpread, a, b)
 table(tarSpread[[a]])
 table(tarSpread[[b]])
 
+names(tarSpread)
 a <- 'Construction_Companies'
 b <- 'Construction_Company'
 table(tarSpread[[a]])
@@ -48,6 +50,7 @@ table(tarSpread[[a]])
 table(tarSpread[[b]])
 
 
+names(tarSpread)
 a <- 'Manufacturers'
 b <- 'Manufacturer'
 table(tarSpread[[a]])
@@ -56,6 +59,7 @@ tarSpread <- CombineSimilarColumns(tarSpread, a, b)
 table(tarSpread[[a]])
 table(tarSpread[[b]])
 
+names(tarSpread)
 a <- 'Retailers'
 b <- 'Retailer'
 table(tarSpread[[a]])
@@ -64,6 +68,7 @@ tarSpread <- CombineSimilarColumns(tarSpread, a, b)
 table(tarSpread[[a]])
 table(tarSpread[[b]])
 
+names(tarSpread)
 a <- "Smart_Home_OEM"
 b <- "Smart_Home_OEM's"
 table(tarSpread[[a]])
@@ -72,6 +77,7 @@ tarSpread <- CombineSimilarColumns(tarSpread, a, b)
 table(tarSpread[[a]])
 table(tarSpread[[b]])
 
+names(tarSpread)
 a <- "Smart_Home_Platform_Providers"
 b <- "Smart_Home_Platform_Provider"
 table(tarSpread[[a]])
@@ -80,6 +86,7 @@ tarSpread <- CombineSimilarColumns(tarSpread, a, b)
 table(tarSpread[[a]])
 table(tarSpread[[b]])
 
+names(tarSpread)
 a <- "Technology_Providers/Vendors"
 b <- "Technology_Provider/Vendor"
 table(tarSpread[[a]])
@@ -88,6 +95,7 @@ tarSpread <- CombineSimilarColumns(tarSpread, a, b)
 table(tarSpread[[a]])
 table(tarSpread[[b]])
 
+names(tarSpread)
 a <- "Telecom_Operators"
 b <- "Telecom_Operator"
 table(tarSpread[[a]])
@@ -95,6 +103,8 @@ table(tarSpread[[b]])
 tarSpread <- CombineSimilarColumns(tarSpread, a, b)
 table(tarSpread[[a]])
 table(tarSpread[[b]])
+
+names(tarSpread)
 a <- "Transport_Companies"
 b <- "Transport_Company"
 table(tarSpread[[a]])
@@ -102,6 +112,8 @@ table(tarSpread[[b]])
 tarSpread <- CombineSimilarColumns(tarSpread, a, b)
 table(tarSpread[[a]])
 table(tarSpread[[b]])
+
+names(tarSpread)
 a <- "Utility_Companies"
 b <- "Utility_Company"
 table(tarSpread[[a]])
@@ -109,16 +121,73 @@ table(tarSpread[[b]])
 tarSpread <- CombineSimilarColumns(tarSpread, a, b)
 table(tarSpread[[a]])
 table(tarSpread[[b]])
+
 names(tarSpread)
+a <- "Utility_Companies"
+b <- "Utility"
+table(tarSpread[[a]])
+table(tarSpread[[b]])
+tarSpread <- CombineSimilarColumns(tarSpread, a, b)
+table(tarSpread[[a]])
+table(tarSpread[[b]])
+names(tarSpread)
+
+# usersSpread$Distributors[usersSpread$Distributors_ == 1] <- 1
+# usersSpread <- usersSpread[, names(usersSpread) != 'Distributors_']
+# usersSpread$Manufacturers[usersSpread$Manufacturers_ == 1] <- 1
+# usersSpread <- usersSpread[, names(usersSpread) != 'Manufacturers_']
+# usersSpread$System_Integrators[usersSpread$System_Integrators_ == 1] <- 1
+# usersSpread <- usersSpread[, names(usersSpread) != 'System_Integrators_']
+# usersSpread$Smart_Home_OEM[usersSpread$`Smart_Home_OEM's` == 1] <- 1
+# usersSpread <- usersSpread[, names(usersSpread) != "Smart_Home_OEMs"]
+
+usersSpread <- usersSpread[, !names(usersSpread) %in% drops]
+usersSpread <- usersSpread[, names(usersSpread) != 
+                                   'I_have_limited_knowledge_in_Smart_Home']
+usersSpread <- usersSpread[, names(usersSpread) != 
+                                   'Security_and_Privacy_in_the_Smart_Home']
+
 
 names(usersSpread)
 a <- "Smart_Home_OEM"
-b <- "Smart_Home_OEM’s"
+b <- "Smart_Home_OEMs"
 table(usersSpread[[a]])
 table(usersSpread[[b]])
 usersSpread <- CombineSimilarColumns(usersSpread, a, b)
 table(usersSpread[[a]])
 table(usersSpread[[b]])
+names(usersSpread)
+
+a <- "Distributors"
+b <- "Distributors_"
+table(usersSpread[[a]])
+table(usersSpread[[b]])
+usersSpread <- CombineSimilarColumns(usersSpread, a, b)
+table(usersSpread[[a]])
+table(usersSpread[[b]])
+names(usersSpread)
+
+a <- "Manufacturers"
+b <- "Manufacturers_"
+table(usersSpread[[a]])
+table(usersSpread[[b]])
+usersSpread <- CombineSimilarColumns(usersSpread, a, b)
+table(usersSpread[[a]])
+table(usersSpread[[b]])
+names(usersSpread)
+
+a <- "System_Integrators"
+b <- "System_Integrators_"
+table(usersSpread[[a]])
+table(usersSpread[[b]])
+usersSpread <- CombineSimilarColumns(usersSpread, a, b)
+table(usersSpread[[a]])
+table(usersSpread[[b]])
+names(usersSpread)
+
+
+
+
 
 for(i in 1:length(names(usersSpread))){
         print(names(usersSpread[i]))
